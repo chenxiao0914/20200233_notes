@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			a:link{/* 未访问过 */
+				color: green;
+			}
+			a:visited{/* 访问过 */
+				color: #FF0000;
+			}
+			a:hover{/* 鼠标移入 */
+				color: aqua;
+			}
+			a:active{/* 超链接被点击状态 */
+				color: black;
+			}
+			input:focus{/* 获取焦点 */
+				background-color: antiquewhite;
+			}
+			p::selection{/* 对选中的内容设置样样式 */
+				background-color: red;
+			}
+			p::-moz-selection{/* 兼容火狐 */
+				background-color: red;
+			}
+		</style>
+		<style type="text/css">
+			p:first-letter{/* 第一个字 */
+				color: red;
+			}
+			p:first-line{/* 第一行 */
+				color: yellow;
+			}
+			p:before{
+				content: "我在p元素之前";
+				color: #00FFFF;
+			}
+			p:after{
+				content: "我在p元素之后";
+				color: purple;
+			}
+		</style>
+	</head>
+	<body>
+		<p>Dubbo是阿里巴巴开源的基于 Java 的高性能 RPC（一种远程调用） 分布式服务框架（SOA），致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案</p>
+		
+		<hr>
+		<a href="www.baidu.com">访问过的连接</a>
+		<br><br>
+		<a href="www.qwe.com">未访问过得连接</a>
+		<br><br>
+		<input type="" name="" id="" value="" /><br><br>
+		<p>爱穿中国红</p>
+	</body>
+</html>

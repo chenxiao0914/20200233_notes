@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>样式表、选择器</title>
+		<!-- 外部样式表 -->
+		<link rel="stylesheet" type="text/css" href="../css/testcss.css"/>
+		<style type="text/css">/* 内部样式表 */
+			div span{/* 后代元素选择器 */
+				color: #9ACD32;
+			}
+			div > span{/* 子元素选择器 */
+				color: #9ACD32;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div>
+			<span>div中的span</span>
+			<p><span>p标签中的span</span></p>
+		</div>
+		<span>body中的span</span>
+	</body>
+</html>

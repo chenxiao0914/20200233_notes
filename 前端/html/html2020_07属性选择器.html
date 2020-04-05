@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			p[title]{}/* 选取含有指定属性的元素 */
+			p[title="abc"]{}/* 选取含有指定属性值的元素 */
+			p[title^="c"]{}/* 选取以属性指定内容开头的元素 */
+			p[title$="c"]{}/* 选取以属性指定内容结尾的元素 */
+		</style>
+	</head>
+	<body>
+		<p title="abc">我是一个p标签</p>
+		<p title="cd">我是一个p标签</p>
+		<p>我是一个p标签</p>
+		<p>我是一个p标签</p>
+		<p>我是一个p标签</p>
+		<p>我是一个p标签</p>
+		<p title="abd">我是一个p标签</p>
+	</body>
+</html>

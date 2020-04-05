@@ -1,0 +1,56 @@
+<!-- 
+	!DOCTYPE html> ：html5文档声明
+ -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- 
+		meta：设置网页的元数据，如字符集，关键字，简介
+		charset="utf-8"：告诉浏览器，网页所采用的的编码字符集 ，这样浏览器会自动按相应的字符集解析-->
+		可以做请求的重定向
+		<meta charset="utf-8" name="keywords" content="html,Java">
+		<meta http-equiv="refresh" content="5;url=www.baidu.com"/>
+		<!-- title标签会影响网页在搜索引擎的排名，由公司SEO设计 -->
+		<title>html介绍</title>
+	</head>
+	<body>
+		<!-- 
+		 c/s:客户端/服务器---一般软件都是c/s架构
+			客户端和服务器通信采用自有协议或者自定义协议，相对安全
+			不可以跨平台使用
+			客户端和服务器得同时更新
+		 b/s:浏览器/客户端---实际上也是c/s架构，只是使用浏览器作为软件的客户端。以网页形式访问
+			软件可以跨平台使用
+			通信采用通用的http协议或者https协议（在http协议上加了安全套接字），相对来说不安全
+			
+		根据w3c标准，一个网页由一下三个方面组成：
+			结构：html
+			表现：css
+			行为：javascript
+			
+		html：超文本标记语言（hypertext markup language）	
+		 -->
+		 <h1>html介绍</h1><hr>
+		 
+		 <!-- 
+		 属性：
+			size:范围1--7
+		 -->
+		 <h1>这是我的2020 <font color="red" size="3">第一个</font> html</h1>
+		 <hr>
+		 <!-- 
+			ASCII：	美国
+			ISO-8859-1：欧洲
+			GBK:国标码
+			GB2312：中文默认编码
+			UTF-8：unicode万国码，支持全世界所有文字
+			
+			
+			在中文浏览器中，默认使用GB2312解码
+			ANSI：根据系统自动选择编码
+		 -->
+		 乱码问题：编码和解码采用的字符集不一致所导致。<br>
+		 在中文浏览器中，默认使用GB2312解码
+		
+	</body>
+</html>
