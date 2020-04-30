@@ -132,15 +132,80 @@ public static void main(String[] args) {
 19是质数
 ~~~
 
-
-
 C/S：client-server	客户端-->手机端
 
 B/S：browser-server	浏览器
 
 
 
+# 七、访问修饰符
 
+public、protected、private、默认修饰符（不写）、static、final、abstract
 
+public：能被所有的类（接口、成员）访问。
 
+protected：只能被同类、同包、子类访问，不能被非同包的类访问。如果再其他包中，则必须是该成员所属类的子类。
+
+默认修饰符：只能被同类，同包访问，子类无法访问。
+
+private：成员变量和方法都只能在定义它的类中被访问，其他类无法访问。
+
+static：修饰变量，称为静态变量或类变量，所有实例共享该变量，在类初始化时加载。修饰方法，称为类方法，通过类名.调用。
+
+final：被声明为fainal的变量必须在声明式给定初始值，且该值不能修改。修改类时，该类为最终类，无法派生子类，也就是没有子类。修饰方法时，该方法被子类不能被重写，但可以在本类中重载。
+
+abstract：不能穿件abstract类的实例。一旦被继承，子类需要实现所有抽象方法。
+
+| 访问级别 | 访问修饰符     | 同类 | 同包 | 子类 | 不同的包 |
+| -------- | -------------- | ---- | ---- | ---- | -------- |
+| 公开     | public         | √    | √    | √    | √        |
+| 受保护   | protected      | √    | √    | √    | ×        |
+| 默认     | 没有访问修饰符 | √    | √    | ×    | ×        |
+| 私有     | private        | √    | ×    | ×    | ×        |
+
+# 八、循环、控制
+
+if、if-else、while、switch--case、for、break、continue
+
+1、switch在jdk8之后，可使用字符串充当比较条件。
+
+2、break跳出当前的多重循环
+
+~~~java
+ok:
+for (int i = 0; i < 10; i++) {
+    System.out.println(i);
+    for(int j = 0; j<3; j++) {
+        System.out.println("j="+j);
+        if(i == 2) {
+            break ok;
+        }
+    }
+}
+System.out.println(111);
+~~~
+
+# 九、异常
+
+exception：分为checked异常和unchecked异常（RuntimeException运行时异常：不需要try...catch...或者throws处理的异常）。一般是因为程序员没有进行必须的检查引起，如NullPointException、ArithmaticException、ArrayIndexoutofBoundsException。
+
+error：系统错误或者底层资源的错误，一般为底层的不可恢复的类。
+
+# 十、反射
+
+# 十一、集合
+
+# 十二、常用类
+
+1、数学运算：Math、Decimal
+
+Math.ceil()：向上取整。 Math.ceil(11.3)=12;Math.ceil(-11.3)=-11。 
+
+Math.floor()：向下取整。 Math.floor(11.6)=12;Math.floor(-11.6)=-12 
+
+Math.round()：四舍五入。 Math.round(-11.3)= -11;
+
+Math.random()：随机生成大于等于0，小于1的小数。
+
+2、日期：Date、SimpleDateFormat
 
