@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title></title>
+		<script src="../js/vue.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<div >
+			<table>
+				<thead>
+					<tr>
+						<td>姓名</td>
+						<td>年齡</td>
+					</tr>
+				</thead>
+				<tbody id="app">
+					<tr v-for="user in users">
+						<td>{{user.name}}</td>
+						<td>{{user.age}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data () {
+				return {
+					users: null
+				}
+			},
+			mounted () {
+				axios
+				.post('http://127.0.0.1:8080/getUsers')
+				.then(response => {
+					this.users = response.data;
+				
+				})
+				.catch(function (error) { // 请求失败处理
+					console.log(error);
+				});
+			}
+		})
+	</script>
+</html>

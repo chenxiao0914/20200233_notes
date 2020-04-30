@@ -137,6 +137,22 @@ jdbc.password = 123456
 
 ## 3、resultMap
 
+针对查询操作结果集中的列名和对象的属性名不一致时的处理方法。column对应表列名，property对应类的字段名。
+
+~~~xml
+<resultMap type="User" id="baseResultMap">
+    <result column="u_id" property="id"/>
+    <result column="u_name" property="name"/>
+    <result column="u_age" property="age"/>
+</resultMap>
+
+<select id="selOne" resultMap="baseResultMap">
+    select * from User where id = #{id}
+</select>
+~~~
+
+
+
 ## 4、Mapper接口
 
 此时mapper.xml文件de namespace的值必须是接口的全限定类名，此处底层使用的是动态代理技术。
@@ -155,11 +171,61 @@ jdbc.password = 123456
 	}
 ~~~
 
+~~~xml
+<mappers>
+  <mapper resource="org/mybatis/builder/AuthorMapper.xml"/>
+  <mapper resource="org/mybatis/builder/BlogMapper.xml"/>
+</mappers>
+
+<mappers>
+  <package name="org.mybatis.builder"/>
+</mappers>
+
+<mappers>
+  <mapper class="org.mybatis.builder.AuthorMapper"/>
+  <mapper class="org.mybatis.builder.BlogMapper"/>
+</mappers>
+~~~
+
 
 
 ## 5、参数处理
 
+~~~java
+//1、把多个参数封装成一个JavaBean
+User login1(UserVo vo);
+//2、使用map封装多个参数
+User login2(Map<String,Object> map);
+//3、使用Param注解，原理是方式二，只不过mybatis底层自动封装
+User login3(Param("a")String name,Param("b")String password);
+~~~
+
+
+
 ## 6、#和$
+
+都可以获取对象中的信息。
+
+#传递的参数会转换成占位符‘？’，在通过对占位符设置参数的方法赋值。会自动添加单引号。
+
+$传递的参数会把解析出来的数据作为SQL语句的一部分。不会自动添加单引号。可能会导致sql注入问题。
+
+~~~xml
+使用#
+select * from user where name = ? and password = ?
+使用$
+select * from user where name = aaa and password = 111
+~~~
+
+
+
+
+
+
+
+
+
+
 
 # 三、注解开发
 

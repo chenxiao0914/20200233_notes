@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{ message + 1}}
+		</div>
+		<div id="app2">
+			<span v-bind:title="message">
+				Vue绑定
+			</span>
+		</div>
+		<div id="app3">
+			<p>{{ message }}</p>
+			<button v-on:click="reserveMessage">反转信息</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+			data: {
+				message: "hello vue!"
+			},
+			methods:{
+				reserveMessage:function(){
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		})
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'Hello Vue!'
+			}
+		});
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				message: '页面加载与'+new Date().toLocaleString()
+			}
+		})
+	</script>
+</html>
