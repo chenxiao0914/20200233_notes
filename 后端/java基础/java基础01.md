@@ -197,15 +197,87 @@ error：系统错误或者底层资源的错误，一般为底层的不可恢复
 
 # 十二、常用类
 
-1、数学运算：Math、Decimal
+## 1、数学运算
 
-Math.ceil()：向上取整。 Math.ceil(11.3)=12;Math.ceil(-11.3)=-11。 
+**Math**
 
-Math.floor()：向下取整。 Math.floor(11.6)=12;Math.floor(-11.6)=-12 
+Math.ceil()：向上取整。 Math.ceil(11.3)=12;Math.ceil(-11.3) = -11。 	//返回值是double类型
 
-Math.round()：四舍五入。 Math.round(-11.3)= -11;
+Math.floor()：向下取整。 Math.floor(11.6)=12;Math.floor(-11.6) = -12 	//返回值是double类型
 
-Math.random()：随机生成大于等于0，小于1的小数。
+Math.round()：四舍五入。 Math.round(-11.3) = -11;	//返回值是long类型
 
-2、日期：Date、SimpleDateFormat
+Math.random()：随机生成大于等于0，小于1的小数。	//返回值是double类型
+
+随机产生数的两种方法：
+
+~~~text
+Random r = new Random();
+int n = r.nextInt(最大值 - 最小值 + 1) + 最小值;
+
+int n = Math.random()*(最大值 - 最小值 + 1) + 最小值;
+~~~
+
+
+
+**BigDecimal**
+
+构造方法：
+
+~~~java
+public BigDecimal(double val)	//不建议使用
+public BigDecimal(int val)	//推荐
+public  BigDecimal(String val)	//推荐
+//参数类型为double的构造方法有一定的不可预知性，而String参数类型的构造方法是完全可预知的。
+//当double必须作为参数是，推荐使用Double.toString(double)转成String在使用，或者使用
+//BigDecimal的静态方法valueOf()。BigDecimal.valueOf(2.3)。
+~~~
+
+加减乘除
+
+~~~java
+public BigDecimal add(BigDecimal val);	//加法
+public BigDecimal subtract(BigDecimal val);	//减法
+Public BigDecimal multiply(BigDecimal val);	//乘法
+Public BigDecimal divide(BigDecimal val);	//除法
+~~~
+
+BigDecimal除法可能出现不能整除的情况，比如4.5/1.3。这时会报ArithmeticException异常。
+
+这时可用divide的重载方法：
+
+~~~java
+Public BigDecimal divide(BigDecimal val,int scale,int roundingMode);
+//第一个参数表示被除数，第二个表示小数点后保留几位小数，第三个表示舍入模式
+~~~
+
+舍入模式：	
+
+ROUND_CEILING	//向正无穷方向舍入
+
+ROUND_DOWN	//向零方向舍入
+
+ROUND_FLOOR	//向负无穷方向取舍
+
+ROUND_HALF_DOWN	//向距离最近的一边舍入，如果两边一样，则向下取舍
+
+ROUND_HALF_EVEN	//
+
+ROUND_HALF_UP	//向距离最近的一边舍入，除非两边一样，此时向上取舍（四舍五入）
+
+ROUND_UNNECESSARY	//计算结果是精确地，不需要舍入
+
+ROUND_UP	//向远离零的方向舍入
+
+~~~java
+BigDecimal a = new BigDecimal("3.3425");
+a = a.setScale(3, RoundingMode.HALF_UP);
+System.out.println(a);//3.343
+~~~
+
+加减乘除最终返回的都是一个新的BigDecimal对象，因为BigInteger和BigDecinal都是不可变的（immutable）。setScale不会返回新的对象。
+
+## 2、日期
+
+Date、SimpleDateFormat
 

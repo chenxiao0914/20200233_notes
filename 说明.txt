@@ -8,3 +8,24 @@
 
 	"\350\257\264\346\230\216.txt：中文乱码
 		解决方法：git config --global core.quotepath false
+
+
+
+
+javaSE内容：
+	环境搭建、基础语法、面向对象、数组、集合、常用API、IO流、反射、多线程、网络编程
+	写一个socket聊天室和打字游戏
+数据库：
+	mysql（多练）
+前端：
+	html、css、js、jquery、bootstrap
+	写一个静态页面（模仿一个页面）
+后端：
+	xml、MVC架构模式、Servlet、Filter、JSP、el、jstl、ajax、代理模式、工厂模式、数据库连接池
+	深刻理解MVC模式，用servlet+ajax+mysql+jquery+jdbc写一个项目
+项目管理：
+	maven、git
+框架：
+	ssm
+加分：
+	dubbo、zookeeper、redis、linux、springboot、springcloud、mq、ngix、vue、多线程、设计模式、jvm优化、算法
