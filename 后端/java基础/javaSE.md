@@ -1,5 +1,32 @@
 # 一、环境搭建
 
+## 1、basic
+
+1. 核心优势：跨平台	|||||||	分布式、多线程
+2. javaSE：java standard edition==》标准版，定位在个人计算机上的应用。c++更优秀。
+3. javaEE：java enterprise edition==》企业版，定位在服务器端的应用。eg：银行操作员
+4. javaME：java micro edition==》微型版，定位在消费性电子产品的应用。趋向消亡
+
+## 2、java应用程序的运行机制
+
+计算机高级语言的类型主要有编译型和解释性，java是两种类型的结合。
+
+java首先利用文本编译器编写java源程序（.java），再利用编译器（javac）将源文件编译成字节码文件（.class），最后利用虚拟机（java 解释器）执行。
+
+.class --> jre[ 类加载器--字节码校验器--解释器jvm] -->系统平台
+
+## 3、jdk、jre、jvm
+
+jdk：java development kit	包含jre  +  javac、jar、debugging、tools、javap
+
+​	以及增加可编译器和调试器等用于程序开发的文件。
+
+jre：java runtime environment	包含jvm  +  java、javaw、libraries、rt.jar
+
+​	java虚拟机、库函数、运行java应用程序所必须的文件。
+
+jvm：java virtual machine	java虚拟机机制屏蔽了底层运行平台的差别，实现一次编译，随处运行。java虚拟机是实现跨平台的核心机制。
+
 # 二、基础语法
 
 ## 1、常量和变量
@@ -131,7 +158,32 @@ for (int i = 0; i < 10; i++) {
 System.out.println(111);
 ~~~
 
+## 5、访问控制符
 
+public、protected、private、默认修饰符（不写）、static、final、abstract
+
+public：能被所有的类（接口、成员）访问。
+
+protected：只能被同类、同包、子类访问，不能被非同包的类访问。如果再其他包中，则必须是该成员所属类的子类。
+
+默认修饰符：只能被同类，同包访问，子类无法访问。
+
+private：成员变量和方法都只能在定义它的类中被访问，其他类无法访问。
+
+static：修饰变量，称为静态变量或类变量，所有实例共享该变量，在类初始化时加载。修饰方法，称为类方法，通过类名.调用。
+
+final：被声明为fainal的变量必须在声明式给定初始值，且该值不能修改。修改类时，该类为最终类，无法派生子类，也就是没有子类。修饰方法时，该方法被子类不能被重写，但可以在本类中重载。
+
+abstract：不能穿件abstract类的实例。一旦被继承，子类需要实现所有抽象方法。
+
+| 访问级别 | 访问修饰符     | 同类 | 同包 | 子类 | 不同的包 |
+| -------- | -------------- | ---- | ---- | ---- | -------- |
+| 公开     | public         | √    | √    | √    | √        |
+| 受保护   | protected      | √    | √    | √    | ×        |
+| 默认     | 没有访问修饰符 | √    | √    | ×    | ×        |
+| 私有     | private        | √    | ×    | ×    | ×        |
+
+# 
 
 # 三、面向对象
 
@@ -177,7 +229,11 @@ System.out.println(111);
 
 ## 5、内部类
 
+## 6、异常
 
+exception：分为checked异常和unchecked异常（RuntimeException运行时异常：不需要try...catch...或者throws处理的异常）。一般是因为程序员没有进行必须的检查引起，如NullPointException、ArithmaticException、ArrayIndexoutofBoundsException。
+
+error：系统错误或者底层资源的错误，一般为底层的不可恢复的类。
 
 # 四、数组
 
@@ -229,7 +285,7 @@ Collection接口下的集合：List、Set、Queue
 
 Map接口也是一种集合
 
-## List
+## 1、List
 
 List集合代表一个有序、可重复集合，集合中每个元素都有其对应的顺序索引。List集合默认按照元素的添加顺序设置元素的索引，可以通过索引（类似数组的下标）来访问指定位置的集合元素。 增删慢，查询快。
 
@@ -273,7 +329,7 @@ Iterator是一个接口，它是集合的迭代器。集合可以通过Iterator�
 
 　　以上两个接口相比较，不难发现，ListIterator增加了向前迭代的功能（Iterator只能向后迭代），ListIterator还可以通过add()方法向List集合中添加元素（Iterator只能删除元素）。
 
-## Set
+## 2、Set
 
 元素无序不重复，没有下标，只能用迭代来取。增删块，查询慢
 
@@ -349,11 +405,9 @@ HashSet的性能比TreeSet的性能好（特别是添加，查询元素时），
 
 
 
-## Queue
+## 3、Queue
 
-
-
-## Map
+## 4、Map
 
 Map接口采用键值对Map<K,V>的存储方式，保存具有映射关系的数据，因此，Map集合里保存两组值，一组值用于保存Map里的key，另外一组值用于保存Map里的value，key和value可以是任意引用类型的数据。key值不允许重复，可以为null。如果添加key-value对时Map中已经有重复的key，则新添加的value会覆盖该key原来对应的value。常用实现类有HashMap、LinkedHashMap、TreeMap等。 
 
@@ -376,7 +430,7 @@ HashMap与Hashtable是Map接口的两个典型实现，它们之间的关系完�
 
 　　HashMap工作原理如下：
 
-　　HashMap基于hashing原理，通过put()和get()方法存储和获取对象。当我们将键值对传递给put()方法时，它调用建对象的hashCode()方法来计算hashCode值，然后找到bucket位置来储存值对象。当获取对象时，通过建对象的equals()方法找到正确的键值对，然后返回对象。HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会存储在链表的下一个节点中。
+　　HashMap基于hashing原理，通过put()和get()方法存储和获取对象。当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashCode值，然后找到bucket位置来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回对象。HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会存储在链表的下一个节点中。
 ~~~
 
 
@@ -410,6 +464,414 @@ TreeMap是SortedMap的实现类，是一个红黑树的数据结构，每个key-
 
 
 # 六、常用API
+
+## 1、String
+
+ String类代表字符串。字符串的值在创建之后不能更改。字符串本身不能改变，但str变量中记录的地址值是可以改变的。底层原理是 byte[] 字节数组  底层原理是 byte[] 字节数组 。
+
+~~~java
+String s1 = new String(); //创建String对象，字符串中没有内容	
+byte[] bys = new byte[]{97,98,99,100};
+String s2 = new String(bys); // 创建String对象，把数组元素作为字符串的内容。s2=abcd
+String s3 = new String(bys, 1, 3); //创建String对象，把一部分数组元素作为字符串的内容，参数offset为数组元素的起始索引位置，参数length为要几个元素	
+char[] chs = new char[]{’a’,’b’,’c’,’d’,’e’};
+String s4 = new String(chs); //创建String对象，把数组元素作为字符串的内容
+String s5 = new String(chs, 0, 3);//创建String对象，把一部分数组元素作为字符串的内容，参数offset为数组元素的起始索引位置，参数count为要几个元素
+~~~
+
+ 若想操作可变的字符串，可以用字符串缓冲区。StringBuffer就是字符串缓冲区，它是一个容器，可以装很多字符串，并能进行操作 。
+
+~~~java
+StringBuffer sb = new StringBuffer();
+sb.append("haha"); //添加字符串
+sb.insert(2, "it");//在指定位置插入
+sb.delete(1, 4);//删除
+sb.replace(1, 4, "cast");//替换指定范围内的内容
+~~~
+
+**字符串转换**
+
+- char[] toCharArray()：将字符串拆分成字符数组，返回该字符数组
+- byte[] getBytes()：获取字符串底层字节数组，返回该字节数组的地址值（引用对象）
+
+~~~java
+public static void main(String[] args){
+    String strA = "中国";
+
+    // 返回字符数组
+    System.out.println(strA.toCharArray());  // 中国
+
+    // 返回字节数组(返回的是对象的引用)
+    byte[] byteArray1 = strA.getBytes();
+    System.out.println(byteArray1);  // [B@1e643faf
+    for (int i = 0; i < strA.length(); i++){
+        System.out.print(byteArray1[i]);  // -28-72
+        if (i == strA.length() - 1){
+            System.out.println();
+        }
+    }
+
+    byte[] byteArray2 = "abc".getBytes();
+    System.out.println(byteArray2);  // [B@6e8dacdf
+    for (int i = 0; i < "abc".length(); i++){
+        System.out.print(byteArray2[i]);  // 979899
+        if (i == "abc".length() - 1){
+            System.out.println();
+        }
+    }
+
+    // 字符串替换
+    System.out.println(strA.replace("中", "爱"));  // 爱国
+}
+~~~
+
+
+
+## 2、Scanner
+
+ Scanner 类可以实现键盘输入 。
+
+~~~java
+public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // 让用户输入一个整数，用户输入的不是整数会抛出异常（InputMismatchException）
+    int num = scanner.nextInt();
+    // 输入一个字符串
+    String str = scanner.next();
+    System.out.println(num + str);
+}
+~~~
+
+
+
+## 3、Math和Random
+
+**Math**
+
+Math.ceil()：向上取整。 Math.ceil(11.3)=12;Math.ceil(-11.3) = -11。 	//返回值是double类型
+
+Math.floor()：向下取整。 Math.floor(11.6)=12;Math.floor(-11.6) = -12 	//返回值是double类型
+
+Math.round()：四舍五入。 Math.round(-11.3) = -11;	//返回值是long类型
+
+Math.random()：随机生成大于等于0，小于1的小数。	//返回值是double类型
+
+随机产生数的两种方法：
+
+~~~text
+Random r = new Random();
+int n = r.nextInt(最大值 - 最小值 + 1) + 最小值;
+
+int n = Math.random()*(最大值 - 最小值 + 1) + 最小值;
+~~~
+
+**Random**
+
+Random 类可用来生成一个随机数；Random random = new Random()
+
+获取一个随机 int 数字（默认是 int 所有范围，有正负两种）：int num = random.nextInt();
+
+获取一个随机 int 数字（指定范围 [0, 99)，规则是**顾前不顾尾**）：int num = random.nextInt(100);
+
+**BigDecimal**
+
+构造方法：
+
+~~~java
+public BigDecimal(double val)	//不建议使用
+public BigDecimal(int val)	//推荐
+public  BigDecimal(String val)	//推荐
+//参数类型为double的构造方法有一定的不可预知性，而String参数类型的构造方法是完全可预知的。
+//当double必须作为参数是，推荐使用Double.toString(double)转成String在使用，或者使用
+//BigDecimal的静态方法valueOf()。BigDecimal.valueOf(2.3)。
+~~~
+
+加减乘除
+
+~~~java
+public BigDecimal add(BigDecimal val);	//加法
+public BigDecimal subtract(BigDecimal val);	//减法
+Public BigDecimal multiply(BigDecimal val);	//乘法
+Public BigDecimal divide(BigDecimal val);	//除法
+~~~
+
+BigDecimal除法可能出现不能整除的情况，比如4.5/1.3。这时会报ArithmeticException异常。
+
+这时可用divide的重载方法：
+
+~~~java
+Public BigDecimal divide(BigDecimal val,int scale,int roundingMode);
+//第一个参数表示被除数，第二个表示小数点后保留几位小数，第三个表示舍入模式
+~~~
+
+舍入模式：	
+
+ROUND_CEILING	//向正无穷方向舍入
+
+ROUND_DOWN	//向零方向舍入
+
+ROUND_FLOOR	//向负无穷方向取舍
+
+ROUND_HALF_DOWN	//向距离最近的一边舍入，如果两边一样，则向下取舍
+
+ROUND_HALF_EVEN	//
+
+ROUND_HALF_UP	//向距离最近的一边舍入，除非两边一样，此时向上取舍（四舍五入）
+
+ROUND_UNNECESSARY	//计算结果是精确地，不需要舍入
+
+ROUND_UP	//向远离零的方向舍入
+
+~~~java
+BigDecimal a = new BigDecimal("3.3425");
+a = a.setScale(3, RoundingMode.HALF_UP);
+System.out.println(a);//3.343
+~~~
+
+加减乘除最终返回的都是一个新的BigDecimal对象，因为BigInteger和BigDecinal都是不可变的（immutable）。setScale不会返回新的对象。
+
+## 4、Arrays
+
+java.util.Arrays 类是一个与数组相关的工具类，里面提供了大量静态方法，用来实现常见的数组操作
+
+public static String toString(参数数组)：将参数数组转换为字符串返回(按照默认格式：[element1, element2, element3 …])
+
+public static void sort(参数数组)：将当前数组进行排序，默认升序
+
+public static void binarySearch(参数数组，指定元素)： 在指定数组中，查找给定元素值出现的位置。若没有查询到，返回位置为-1。要求该数组必须是个有序的数组。 
+
+~~~java
+int[] arrayNum = {5, 1, 6, 3, 9};
+String[] arrayString = {"bbb", "ccc", "aaa"};
+
+// toString()
+System.out.println(Arrays.toString(arrayNum));  // [5, 1, 6, 3, 9]
+
+// sort()
+Arrays.sort(arrayNum);
+System.out.println(Arrays.toString(arrayNum));  // [1, 3, 5, 6, 9]
+Arrays.sort(arrayString);
+System.out.println(Arrays.toString(arrayString));  // [aaa, bbb, ccc]
+
+int[] arr = {1,3,4,5,6};
+int index = Arrays.binarySearch(arr, 4); //index的值为2
+int index2= Arrasy.binarySearch(arr, 2); //index2的值为-1
+~~~
+
+
+
+## 5、日期类
+
+java.util
+
+- Date
+- Calendar
+
+java.time(jdk>=1.8)
+
+- LocalDate
+- LocalTime
+- ZonedDateTime
+- Instant
+
+新API的特点:
+
+- 严格区分日期,时间
+- 不变类(类似于String)
+- Month范围1-12(Jan-Dec)
+- Week范围1-7(Mon-Sun)
+
+### Date
+
+**主要方法**
+
+- toString() 把Date对象变成字符串
+- getTime()把Date对象转换成时间戳
+
+~~~java
+Date now = new Date();
+System.out.println(now);//Wed Jun 05 14:03:26 CST 2019
+System.out.println(now.toString());// 把now转换成字符形式;Wed Jun 05 14:03:26 CST 2019
+System.out.println(now.getTime());// 通过now获取时间戳;1559714606831
+~~~
+
+存在问题：不能转换时区，日期和时间的加减，两个日期相差多少天，计算某个月第一个星期一。
+
+### SimpleDateFormat
+
+yyyy: 年	MM: 月	dd: 日	HH: 时	mm: 分	ss: 秒
+
+~~~java
+Date now = new Date();
+// 把Date按照格式转换成字符串
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+System.out.println(sdf.format(now));
+
+// 把字符串按照格式转换成Date对象
+String s1 = "2016-11-20 12:15:35";
+Date date1 = sdf.parse(s1);
+System.out.println(date1);
+~~~
+
+### Calendar(日历)
+
+导入: `import java.util.Calendar`
+
+```java
+ // 创建实例
+Calendar c = Calendar.getInstance();
+int y = c.get(Calendar.YEAR);
+int m = c.get(Calendar.MONTH);// 得到的月份比实际月份小1
+int d = c.get(Calendar.DAY_OF_MONTH);
+int w = c.get(Calendar.DAY_OF_WEEK);
+int hh = c.get(Calendar.HOUR_OF_DAY);
+int mm = c.get(Calendar.MINUTE);
+int ss = c.get(Calendar.SECOND);
+int ms = c.get(Calendar.MILLISECOND);
+Date date = c.getTime();
+// 获得时间戳
+long ms1 = c.getTimeInMillis();
+```
+
+- Date c.getTime() 获得Date对象
+- long getTimelnMillis() 获得毫秒数
+- get(int field) 获得年月日, 时分秒
+- setTime(Date) 设定时间
+- setTimeInMillis(long) 根据时间戳设置时间
+- set(int field, int value) 根据年月日等设定时间
+- setTimeZone(TimeZone) 更改时区
+
+```
+c.setTimeZone(TimeZone.getTimeZone("America/New_York"))
+```
+
+- add(int field, int value)
+
+```java
+// +5 day
+c.add(Calendar.DAY_OF_MONTH, 5);
+// -2 hours
+c.add(Calendar.HOUR_OF_DAY, -2);
+```
+
+### LocalDateTime
+
+**获取当前日期和时间**
+
+- LocalDate
+- LocalTime
+- LocalDateTime
+
+```java
+// 当前日期
+LocalDate ld = LocalDate.now();
+// 当前时间
+LocalTime lt = LocalTime.now();
+// 当前日期和时间
+LocalDateTime ldt = LocalDateTime.now();
+
+// 指定日期和时间
+LocalDate ld2 = LocalDate.of(2016, 11, 30);
+LocalTime lt2 = LocalTime.of(15, 16, 17);
+LocalDateTime ldt2 = LocalDateTime.of(2016, 11, 30, 15, 16, 17);
+LocalDateTime ldt3 = LocalDateTime.of(ld2, lt2);
+```
+
+**DateTimeFormatter**
+
+```java
+DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+System.out.println(dtf.format(LocalDateTime.now()));
+LocalDateTime dt3 = LocalDateTime.parse("2016-12-30 15:16:17", dtf);
+System.out.println(dt3);//2016-12-30T15:16:17
+```
+
+**日期和时间的运算**
+
+增加:
+
+- plusYears(1): +1年
+- plusMonths(1): +1月
+- plusDays(1): +1天
+- plusHours(1): +1小时
+- plusMinutes(1): +1 分钟
+- plusSeconds(1): +1 秒
+
+减少
+
+- minusYears(1): +1年
+- minusMonths(1): +1月
+- minusDays(1): +1天
+- minusHours(1): +1小时
+- minusMinutes(1): +1 分钟
+- minusSeconds(1): +1 秒
+
+```java
+LocalDateTime now = LocalDateTime.now();
+LocalDateTime d = now.plusDays(1).minusHours(1);
+```
+
+调整年, 月,日, 时, 分, 秒
+
+- withYear(2018): 调整年
+- withMonth(): 调整月
+- withDayOfMonth(): 调整为本月的第几天
+- withDayOfYear(): 调整本年的第几天
+- withHour(): 调整小时
+- withMinute(): 调整分钟
+- withSecond(): 调整秒
+
+判断日期和时间的先后:
+
+- isBefore()
+- isAfter()
+- equals()
+
+计算两个日期的相差时间:Period
+
+```java
+	LocalDate d1 = LocalDate.of(2018, 11, 20);
+	LocalDate d2 = LocalDate.of(2050, 1, 2);
+	Period p = d1.until(d2);
+	System.out.println(p);// P31Y1M13D  
+	// 两个日期相差多少天
+	System.out.println(Math.abs(d1.toEpochDay() - d2.toEpochDay()));// 11366
+```
+
+- p.getYears()
+- p.getMonths()
+- p.getDays()
+
+### **ZonedDateTime**
+
+ZonedDateTime = LocalDateTime + ZoneId
+
+- ZonedDateTime: 带时区的日期和时间
+- ZoneId: 新时区对象(取代就的java.util.TimeZone)
+- Instant: 时刻对象(内部用long表示epoch seconds)
+
+```java
+ZonedDateTime zbj = ZonedDateTime.now();// 当前时区的日期和时间
+ZonedDateTime zny = ZonedDateTime.now(ZoneId.of("America/New_York"));// 纽约时区的日期和时间
+// 北京时区变成纽约时区
+ZonedDateTime ny = zbj.withZoneSameInstant(ZoneId.of("America/New_York"));
+// 把LocalDateTime转换成ZonedDateTime
+ZonedDateTime bj = LocalDateTime.now().atZone(ZoneId.systemDefault());
+```
+
+Instant: 对象表示某个时刻
+
+```java
+Instant ins1 = Instant.now();
+Instant ins2 = ZonedDateTime.now().toInstant();
+// 注意是秒
+long epoch = ins1.getEpochSecond();
+```
+
+
+
+## 6、Collections
 
 # 七、IO流
 
