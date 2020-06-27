@@ -873,10 +873,279 @@ long epoch = ins1.getEpochSecond();
 
 ## 6、Collections
 
+
+
 # 七、IO流
+
+File
+
+file、directory、path
+
+路径分隔符，windoms（;）,linux（:）,File.pathSeparator。
+
+文件分隔符，windoms（\）,linux（/），开发时不能写死，使用 File.separator代替。
+
+## 1、字节流
+
+- 字节输入流：OutputStream
+  - FileInputStream、
+- 字节输出流：InputStream
+  - FileOutputStream、
+
+~~~java
+//FileOutputStream	向c.txt中写出数据
+File file = new File("c.txt");
+FileOutputStream fos = new FileOutputStream(file);
+fos.write(97);
+fos.write(98);
+fos.write(99);
+fos.close();
+System.out.println("写出成功");
+~~~
+
+**字节流输入输出**
+
+~~~
+FileInputStream fis = new  FileInputStream("D:\\tools\\eclipse_2020\\a\\src\\a\\a.txt");
+		File file = new File("b.txt");
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		
+		FileOutputStream fos = new FileOutputStream(file);
+		int len = 0;
+		byte[] bytes = new byte[1024];
+		
+		while((len = fis.read(bytes)) != -1) {
+			fos.write(bytes, 0, len);
+		}
+		fos.close();
+		fis.close();
+~~~
+
+**存在的问题：一个中文在GBK编码下，占2个字节；在utf-8编码下，占3个字节，可能会出现乱码的情况！**
+
+
+
+## 2、字符流
+
+​	字符输入流：Read
+
+- FileRead（InputStreamRead的子类）
+
+~~~java
+//一次读取一个字节
+File file = new File("c.txt");
+FileReader fs = new FileReader(file);
+int len = 0;
+while((len = fs.read()) != -1) {
+    System.out.println((char)len);
+}
+fs.close();
+~~~
+
+~~~java
+//一次读取多个字节
+File file = new File("c.txt");
+FileReader fs = new FileReader(file);
+int len = 0;
+char[] chars = new char[3];
+while((len=fs.read(chars)) != -1) {
+    System.out.println(new String(chars,0,len));
+}
+fs.close();
+~~~
+
+
+
+​	字符输出流：Writer
+
+- FileWriter（OutputStreamWriter的子类）
+
+~~~java
+File file = new File("d.txt");
+FileWriter fw = new FileWriter(file);
+fw.write(99);
+fw.write(102);
+fw.write("x"+"\r\n");
+fw.write("致橡树".toCharArray());
+fw.flush();
+fw.close();
+~~~
+
+换行符：windoms：\r\n	linux：/r	mac：/n
+
+
+
+## 3、缓冲流
+
+BufferedInputStream、BufferedOutputStream、BufferedRead、BufferedWriter
+
+## 4、转换流
+
+InputStreamReader、OutputStreamWriter
+
+~~~java
+//按照默认编码写出数据  utf-8
+OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("a.txt"));
+osw.write("你好");
+osw.flush();
+osw.close();//你好
+~~~
+
+~~~java
+//按照指定编码写出数据   gbk
+OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("a.txt"),"gbk");
+osw.write("你好");
+osw.flush();
+osw.close();//���
+~~~
+
+a.txt是上面以gbk编码格式写出的数据
+
+读数据时的编码必须与文件的编码方式一致，否则会出现乱码！如下。
+
+~~~java
+//按照默认码表读数据		utf-8
+InputStreamReader isr = new InputStreamReader(new FileInputStream("a.txt"));
+int len = 0;
+while((len = isr.read()) != -1) {
+    System.out.print((char)len);
+}
+isr.close();//���
+~~~
+
+~~~java
+//按照指定码表读数据		gbk
+InputStreamReader isr = new InputStreamReader(new FileInputStream("a.txt"),"gbk");
+int len = 0;
+while((len = isr.read()) != -1) {
+    System.out.print((char)len);
+}
+isr.close();//你好
+~~~
+
+转换文件编码：将gbk格式的文件转换成utf-8格式的文件
+
+~~~java
+InputStreamReader isr = new InputStreamReader(new FileInputStream("a.txt"),"gbk");
+OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("b.txt"),"utf-8");
+int len = 0;
+while((len = isr.read()) != -1) {
+    osw.write(len);
+}
+osw.close();
+isr.close();
+~~~
+
+## 5、序列化流和反序列化流
+
+ObjectInputStream、ObjectOutputStream
+
+序列化和反序列化的对象必须实现Serializable接口，并尽量添加序列值 static final seril = 11111L。否则在类被修改后可能会报 InvalidClassException异常。
+
+## 6、打印流
+
+PrintStream，System.out的底层实现原理。System.out返回PrintStream对象。
 
 # 八、反射
 
 # 九、多线程
 
 # 十、网络编程
+
+UDP：用户数据报协议，user datagram protocol。在数据传输时，不需要建立逻辑连接。消耗资源小。通信效率高，但不能保证数据的完整性，可能出现丢包。一般用于音频、视频。发送的数据被限制在64KB以内，超出则不能发送。
+
+TCP：传输控制协议，transmission control protocol。面向连接的通信协议。提供两台pc之间可靠无差错的数据传输。会进行三次握手。
+
+网络编程三要素：协议、IP地址、端口
+
+~~~txt
+ipconfig
+ping 192.168.122.123
+~~~
+
+网络的通信，实质是两个进程之间的通信，用端口来区分进程。使用软件时，操作系统会为软件分配一个随机的端口号，或者软件指定一个端口号。端口占两个字节，1-65535。
+
+注意：1024之前的端口号不能使用，已经被系统分配给已知软件。
+
+~~~txt
+80：网络端口
+3306：数据库
+8080：tomcat
+~~~
+
+
+
+~~~java
+package com.cx.socket;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class TestClient {
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		Socket s = new Socket("127.0.0.1",9090);
+		OutputStream out = s.getOutputStream();
+		File file = new File("D:\\a.png");
+		FileInputStream fis = new FileInputStream(file);
+		byte[] bytes = new byte[1024];
+		int len = 0;
+		while((len = fis.read(bytes)) != -1) {
+			out.write(bytes, 0, len);
+		}
+		s.shutdownOutput();//防止read方法阻塞
+		System.out.println("client上传完毕");
+		fis.close();		
+		InputStream in = s.getInputStream();
+		while((len = in.read(bytes)) != -1) {
+			System.out.println(new String(bytes,0,len));
+		}
+		s.close();
+	}
+
+}
+~~~
+
+服务器：
+
+~~~java
+package com.cx.socket;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class TestServer {
+	public static void main(String[] args) throws IOException {
+		ServerSocket server = new ServerSocket(9090);
+		Socket socket = server.accept();
+		InputStream in = socket.getInputStream();
+		File file = new File("D:\\upload");
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		FileOutputStream fos = new FileOutputStream(file+"\\a.png");
+		byte[] bytes = new byte[1024];
+		int len = 0;
+		while((len = in.read(bytes)) != -1) {
+			fos.write(bytes, 0, len);
+		}
+		OutputStream out = socket.getOutputStream();
+		out.write("上传成功".getBytes());
+		socket.shutdownOutput();
+		fos.close();
+		socket.close();
+		server.close();
+	}
+}
+~~~
+

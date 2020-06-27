@@ -1,0 +1,30 @@
+/*---------------------------------styo1---------------------------*/
+/*
+background
+	background-color
+	background-image
+	background-repeat
+	background-position
+	background-attachment
+*/
+#sty01_1{
+	background-color:#bfa;
+}
+#sty01_bg_img{
+	width: 300px;
+	height: 1000px;
+	border: 1px solid;
+	background-image: url(../html/csshtml/a1.png);
+	background-repeat:no-repeat;
+	background-position: 20px 100px;
+	background-attachment:fixed;/*相对于body视口固定*/
+}
+
+/* ---------------------------------styo2--------------------------- */
+
+
+
+
+
+
+
