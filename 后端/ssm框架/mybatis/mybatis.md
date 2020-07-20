@@ -219,14 +219,6 @@ select * from user where name = aaa and password = 111
 
 
 
-
-
-
-
-
-
-
-
 # 三、注解开发
 
 # 四、动态SQL

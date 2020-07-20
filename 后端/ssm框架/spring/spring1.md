@@ -193,7 +193,7 @@ http://www.springframework.org/schema/context/spring-context.xsd
 
 ​	Qualifier：根据属性名称注入，和Autowired配合使用。
 
-​	Resource：可以根据类型，也可以根据名称。Resource(name="xxx")	,没有name=“xxx”时根据类型注入，有		name时根据名称注入。（Resource是javax扩展包中的类，不是spring的）
+​	Resource：可以根据类型，也可以根据名称。Resource(name="xxx")	,没有name=“xxx”时根据类型注入，有name时根据名称注入。（Resource是javax扩展包中的类，不是spring的）
 
 创建对象：引入aop依赖；开启组件扫描（扫描创建对象的注解）；
 
@@ -236,7 +236,7 @@ public class User {
 ~~~xml
 <context:component-scan base-package="com.cx.ssm"></context:component-scan>
 上面的配置可用下面的注解代替
-@ComponentScan(basePackages = {"com.cx.ssm"})//大括号内是数据，只有一个时括号可省略
+@ComponentScan(basePackages = {"com.cx.ssm"})//大括号内是数组，只有一个时括号可省略
 ~~~
 
 ​	Bean：把当前方法的返回值作为bean对象放入spring容器中
@@ -250,29 +250,29 @@ public class User {
 ​	PropertySource：指定properties配置文件的位置
 
 ~~~java
-	@Configuration
-	@ComponentScan(basePackages = {"com.cx.ssm"})
-	public class SpringConfiguration {
+@Configuration
+@ComponentScan(basePackages = {"com.cx.ssm"})
+public class SpringConfiguration {
 
-        @Bean(name = "runner")
-        public QueryRunner createQueryRunner(DataSource dataSource){
-            return new QueryRunner(dataSource);
-        }
+    @Bean(name = "runner")
+    public QueryRunner createQueryRunner(DataSource dataSource){
+        return new QueryRunner(dataSource);
+    }
 
-        @Bean(name = "dataSource")
-        public ComboPooledDataSource createDataSource(){
-            ComboPooledDataSource ds = new ComboPooledDataSource();
-            try {
-                ds.setDriverClass("com.mysql.jdbc.Driver");
-                ds.setJdbcUrl("jdbc:mysql://localhost:3306/ssm");
-                ds.setUser("root");
-                ds.setPassword("123456");
-                return ds;
-            }catch (Exception e){
-                throw new RuntimeException(e);
-            }
+    @Bean(name = "dataSource")
+    public ComboPooledDataSource createDataSource(){
+        ComboPooledDataSource ds = new ComboPooledDataSource();
+        try {
+            ds.setDriverClass("com.mysql.jdbc.Driver");
+            ds.setJdbcUrl("jdbc:mysql://localhost:3306/ssm");
+            ds.setUser("root");
+            ds.setPassword("123456");
+            return ds;
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
+}
 ~~~
 
 # 4、spring整合junit
@@ -695,6 +695,25 @@ public class AccountService {
     }
 }
 ~~~
+
+# 八、面试题
+
+1）、service层事务与try/catch的关系，service层能不能用try-catch
+
+~~~txt
+1、RuntimeException()  例如：数组越界异常、空指针异常、(我们在编写之后不会提示让 try catch的异常、代码编写错误导致，可避免)
+2、非RuntimeException() 例如： IO异常、(会提示try catch的异常，不是代码编写错误导致的，只能抛出)
+3、unchecked异常：RuntimeException + Error
+4、checked异常：非RuntimeException()
+
+详细文章：http://blog.csdn.net/qq_14982047/article/details/50989761
+spring通过异常进行事务回滚的机制：
+1、spring 的默认事务机制，当出现unchecked异常时候回滚，checked异常的时候不会回滚；
+2、我们有时为了打印日志，会在service层抓住Exception并打印日志，这时我们的所有异常都会被认为成checked异常。
+3、为了事务的正常生效：当有try catch后捕获了异常，事务不会回滚，如果不得不在service层写try catch 需要catch后 throw new RuntimeException 让事务回滚
+~~~
+
+
 
 
 

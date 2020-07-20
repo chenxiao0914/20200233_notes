@@ -172,9 +172,9 @@ private：成员变量和方法都只能在定义它的类中被访问，其他�
 
 static：修饰变量，称为静态变量或类变量，所有实例共享该变量，在类初始化时加载。修饰方法，称为类方法，通过类名.调用。
 
-final：被声明为fainal的变量必须在声明式给定初始值，且该值不能修改。修改类时，该类为最终类，无法派生子类，也就是没有子类。修饰方法时，该方法被子类不能被重写，但可以在本类中重载。
+final：被声明为final的变量必须在声明式给定初始值，且该值不能修改。修饰类时，该类为最终类，无法派生子类，也就是没有子类。修饰方法时，该方法被子类不能被重写，但可以在本类中重载。
 
-abstract：不能穿件abstract类的实例。一旦被继承，子类需要实现所有抽象方法。
+abstract：不能创建abstract类的实例。一旦被继承，子类需要实现所有抽象方法。
 
 | 访问级别 | 访问修饰符     | 同类 | 同包 | 子类 | 不同的包 |
 | -------- | -------------- | ---- | ---- | ---- | -------- |
@@ -189,7 +189,7 @@ abstract：不能穿件abstract类的实例。一旦被继承，子类需要实�
 
 ## 1、类与对象
 
- 类是用于描述同一类型的对象的一个抽象的概念，类中定义了这一类对象所因具有静态和动态属性。 类可以看成一类对象（object）的模版，对象可以看成该类的一个具体实例（instance）。 
+ 类是用于描述同一类型的对象的一个抽象的概念，类中定义了这一类对象所具有的静态和动态属性。 类可以看成一类对象（object）的模版，对象可以看成该类的一个具体实例（instance）。 
 
 ## 2、 抽象类与接口
 
@@ -217,6 +217,10 @@ abstract：不能穿件abstract类的实例。一旦被继承，子类需要实�
 
 (4) 派生类必须实现未实现的方法
 
+如果你不能对抽象类实例化那么构造函数的作用是什么？
+
+它可以用来初始化抽象类内部声明的通用变量，并被各种实现使用。 
+
 ## 3、封装、继承、多态
 
  **封装**就是指，将类的属性私有化，提供公开的方法去访问的方式，就叫做封装。  好处：提高代码的复用性；隐藏了实现细节，还要对外提供可以访问的方式；提高了安全性 。
@@ -228,6 +232,133 @@ abstract：不能穿件abstract类的实例。一旦被继承，子类需要实�
 ## 4、泛型
 
 ## 5、内部类
+
+讲一个类定义在另一类里面或者方法里面，这样的类称为内部类。分为成员内部类、局部内部类、匿名内部类、静态内部类。
+
+### 成员内部类
+
+成员内部类可以无条件的访问外部类的所有成员属性和方法，包括private成员和惊静态成员。
+
+~~~java
+class Circle {
+    private double radius = 0;
+    public static int count =1;
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+     
+    class Draw {     //内部类
+        public void drawSahpe() {
+            System.out.println(radius);  //外部类的private成员
+            System.out.println(count);   //外部类的静态成员
+        }
+    }
+}
+~~~
+
+注意：当成员内部类拥有外部类相同的属性或者方法时，默认访问的是内部类的，此时如果需要访问外部类的属性和方法，使用（外部类.this.变量或者方法）。
+
+外部类如果要访问内部类的成员，需要先创建一个成员内部类的对象，在此基础上调用。
+
+在其他类中调用内部类需要先创建外部类，在此基础上调用。
+
+ 内部类可以拥有private访问权限、protected访问权限、public访问权限及包访问权限。比如上面的例子，如果成员内部类Inner用private修饰，则只能在外部类的内部访问，如果用public修饰，则任何地方都能访问；如果用protected修饰，则只能在同一个包下或者继承外部类的情况下访问；如果是默认访问权限，则只能在同一个包下访问。这一点和外部类有一点不一样，外部类只能被public和包访问两种权限修饰。由于成员内部类看起来像是外部类的一个成员，所以可以像类的成员一样拥有多种权限修饰。 
+
+### 局部内部类
+
+局部内部类是定义在一个方法或者作用域里面，访问权限仅限于方法或者作用域内。
+
+~~~java
+class People{
+    public People() {
+         
+    }
+}
+ 
+class Man{
+    public Man(){
+         
+    }
+     
+    public People getWoman(){
+        class Woman extends People{   //局部内部类
+            int age =0;
+        }
+        return new Woman();
+    }
+}
+~~~
+
+注意，局部内部类就像是方法里面的一个局部变量一样，是不能有public、protected、private以及static修饰符的。 
+
+### 匿名内部类
+
+ 匿名内部类应该是平时我们编写代码时用得最多的，在编写事件监听的代码时使用匿名内部类不但方便，而且使代码更加容易维护。 
+
+~~~java
+scan_bt.setOnClickListener(new OnClickListener() {
+
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+
+    }
+});
+
+history_bt.setOnClickListener(new OnClickListener() {
+
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+
+    }
+});
+~~~
+
+ 匿名内部类也是不能有访问修饰符和static修饰符的。 匿名内部类是唯一一种没有构造器的类。正因为其没有构造器，所以匿名内部类的使用范围非常有限，大部分匿名内部类用于接口回调。匿名内部类在编译的时候由系统自动起名为Outter$1.class。一般来说，匿名内部类用于继承其他类或是实现接口，并不需要增加额外的方法，只是对继承方法的实现或是重写。 	
+
+### 静态内部类
+
+静态内部类也是定义在另一个类里面的类，只不过在类的前面多了一个关键字static。静态内部类是不需要依赖于外部类的，这点和类的静态成员属性有点类似，并且它不能使用外部类的非static成员变量或者方法，这点很好理解，因为在没有外部类的对象的情况下，可以创建静态内部类的对象，如果允许访问外部类的非static成员就会产生矛盾，因为外部类的非static成员必须依附于具体的对象。 
+
+~~~java
+public class Test {
+    public static void main(String[] args)  {
+        Outter.Inner inner = new Outter.Inner();
+    }
+}
+ 
+class Outter {
+    public Outter() {
+         
+    }
+     
+    static class Inner {
+        public Inner() {
+             
+        }
+    }
+}
+~~~
+
+注意：
+
+局部内部类和匿名内部类只能访问局部final变量 ， 如果局部变量的值在编译期间就可以确定，则直接在匿名内部里面创建一个拷贝。如果局部变量的值无法在编译期间确定，则通过构造器传参的方式来对拷贝进行初始化赋值。
+
+### 使用内部类的好处 
+
+-  每个内部类都能独立的继承一个接口的实现，所以无论外部类是否已经继承了某个(接口的)实现，对于内部类都没有影响。内部类使得多继承的解决方案变得完整 。 内部类的存在使得Java的多继承机制变得更加完善 。
+-  方便将存在一定逻辑关系的类组织在一起，又可以对外界隐藏 
+-  方便编写事件驱动程序 
+-  方便编写线程代码 
+
+对于成员内部类，必须先产生外部类的实例化对象，才能产生内部类的实例化对象。而静态内部类不用产生外部类的实例化对象即可产生内部类的实例化对象。
+
+创建静态内部类对象的一般形式为： 外部类类名.内部类类名 xxx = new 外部类类名.内部类类名()
+
+创建成员内部类对象的一般形式为： 外部类类名.内部类类名 xxx = 外部类对象名.new 内部类类名()
+
+
 
 ## 6、异常
 
@@ -248,7 +379,7 @@ for(int b:a) {
 }
 ~~~
 
-**数组排序**
+### **数组排序**
 
 - 冒泡排序
 
@@ -268,6 +399,30 @@ for(int i=0; i<arr.length-1; i++){//控制比较的轮数
 ~~~
 
 - 二分法查找
+
+~~~java
+public static void main(String[] args) {
+    int [   ] arr = {78,89,67,98,90,56,88};
+    int start = 0;                  // 默认起始坐标
+    int end = arr.length-1;         // 默认结尾坐标
+    int index = -1;                 // 找不到默认index为-1
+    while(start<=end){
+        int middle = (start+end)/2; // 计算中间下标
+        if(num == arr[middle]){
+            index = middle;
+            break;
+        }
+        if(num > arr[middle]){
+            start = middle + 1;
+        }
+        if(num < arr[middle]){
+            end = middle - 1;
+        }
+    } 
+    System.out.println(index);
+}
+
+~~~
 
 
 
@@ -468,6 +623,8 @@ TreeMap是SortedMap的实现类，是一个红黑树的数据结构，每个key-
 ## 1、String
 
  String类代表字符串。字符串的值在创建之后不能更改。字符串本身不能改变，但str变量中记录的地址值是可以改变的。底层原理是 byte[] 字节数组  底层原理是 byte[] 字节数组 。
+
+indexOf、substring、concat、matches、contains、replace、split、trim、
 
 ~~~java
 String s1 = new String(); //创建String对象，字符串中没有内容	
@@ -873,7 +1030,23 @@ long epoch = ins1.getEpochSecond();
 
 ## 6、Collections
 
+ Collections.sort (List list);
 
+Collections.sort (List list,Comparator comp);
+
+Collections.shuffle(List list);	对集合进行随机排序，乱序！！
+
+Collections.max(List s);	最大值
+
+Collections.min(List s);	最小值
+
+Collections.reserve();	反序排序
+
+
+
+Collections.synchronizedList(List<T>);	将list包装成线程安全的
+
+synchronized  + List、Map、set、Collection
 
 # 七、IO流
 
@@ -934,7 +1107,7 @@ FileInputStream fis = new  FileInputStream("D:\\tools\\eclipse_2020\\a\\src\\a\\
 - FileRead（InputStreamRead的子类）
 
 ~~~java
-//一次读取一个字节
+//一次读取一个字符
 File file = new File("c.txt");
 FileReader fs = new FileReader(file);
 int len = 0;
@@ -945,7 +1118,7 @@ fs.close();
 ~~~
 
 ~~~java
-//一次读取多个字节
+//一次读取多个字符
 File file = new File("c.txt");
 FileReader fs = new FileReader(file);
 int len = 0;
@@ -1050,7 +1223,86 @@ PrintStream，System.out的底层实现原理。System.out返回PrintStream对�
 
 # 八、反射
 
+将类的各个部分封装为其他对象，就是反射机制。
+
+Field（成员变量）、Constructor（构造器）、Method（方法）
+
+- 可以再程序运行过程中，操作这些对象。
+- 可以解耦，提高程序的可扩展性。
+
+## 1、获取Class对象的方式
+
+- Class.forName("全类名");	
+
+- 类名.Class;
+
+- 对象.getClass();
+
+~~~java
+public static void main(String[] args) throws ClassNotFoundException  {
+		
+    Class<?> user1 = Class.forName("test.User");
+    System.out.println(user1);
+
+    Class<?> user2 = User.class;
+    System.out.println(user2);
+
+    User user3 = new User();
+    System.out.println(user3.getClass());
+    System.out.println(user3.getName());//获取全限定类名
+}
+//user1 == user2 == user3	
+//同一个字节码文件再一次程序运行过程中，只会被加载一次，不论哪种方式获取的Class对象都是同一个。
+~~~
+
+## 2、Class对象功能
+
+获取所有成员变量
+
+Filed:	set()		get()
+
+~~~java
+getFields();//获取所有public修饰的成员变量
+getField(String name);//获取指定名称的public修饰的属性
+
+Field d = user1.getDeclaredFields();//获取所有的成员变量，不考虑修饰符
+getDeclaredFields(String name);//但是在获取非public修饰的属性时会报错。需要做处理
+
+Field d = user1.getDeclaredField("name");
+d.setAccessible(true);//暴力反射,忽略访问控制符的安全检查
+Object value = d.get(user);
+System.out.println(value);
+~~~
+
+获取构造方法
+
+Constructor:	newInstance()
+
+~~~java
+getConstructors();
+getConstructor(Class<?>... parameterTypes)
+    
+getDeclaredConstructors();
+getDeclaredConstructor(Class<?>... parameterTypes)
+~~~
+
+
+
+获取成员方法
+
+Method:	invoke()		getName()
+
+~~~java
+getMethods();
+getMethod(String name, Class<?>... parameterTypes)
+    
+getDeclaredMethods();
+getDeclaredMethod(String name, Class<?>... parameterTypes);
+~~~
+
 # 九、多线程
+
+
 
 # 十、网络编程
 
@@ -1075,7 +1327,7 @@ ping 192.168.122.123
 8080：tomcat
 ~~~
 
-
+客户端
 
 ~~~java
 package com.cx.socket;

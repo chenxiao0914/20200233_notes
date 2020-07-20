@@ -7,14 +7,21 @@ cat file1 从第一个字节开始正向查看文件的内容
 tac file1 从最后一行开始反向查看一个文件的内容 
 more file1 一页一页显示文档内容，space：下一页；enter：下一行；/字符串：搜索字符串
 less file1 类似于 'more' 命令，允许反向操作 ，pagedown：下一页；pageup：上一页；n：下一个搜索的字符串
+	/字符串：向下搜索“字符串”的功能
+	?字符串：向上搜索“字符串”的功能
 head -2 file1 查看一个文件的前两行 
 tail -n file1 查看一个文件的最后n行 
 tail -nf a.log实时查看文件的最后n行内容
 
 head -n 20 a.log	查看a.log的前20行，默认10行
 
+grep 该命令通常与管道命令一起使用，用于对一些命令的输出进行筛选
+ps 命令显示运行的进程，还会显示进程的一些信息如pid, cpu和内存使用情况
+
 修改文件权限
 chmod 777 start.sh
+
+查看本地所有的tpc，udp监听端口： netstat -tupln (t=tcp， u=udp， p=program， l=listen， n=numric)
 
 
 删除文件且不提示是否删除

@@ -1,4 +1,4 @@
-springmvc是一种基于java实现mvc设计模型的请求驱动类型的轻量级web框架，属于spring framework的后续产品。他通过一套注解，让一个简单的java类成为处理请求的控制器，二无序实现任何接口，同时支持restful编程风格。
+springmvc是一种基于java实现mvc设计模型的请求驱动类型的轻量级web框架，属于spring framework的后续产品。他通过一套注解，让一个简单的java类成为处理请求的控制器，无需实现任何接口，同时支持restful编程风格。
 
 springmvc和strusts2的区别：
 
@@ -60,7 +60,7 @@ internal
 
 ​		1.表单提交的数据都是k=v格式
 
-​		2.吧表单提交的请求参数作为控制器中方法的参数进行绑定（要求：表单的name和参数名一致）
+​		2.把表单提交的请求参数作为控制器中方法的参数进行绑定（要求：表单的name和参数名一致）
 
 ​	2、支持的数据类型
 
@@ -95,12 +95,12 @@ public class StringToDateConverter implements Converter<String, Date> {
     public Date convert(String s) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         if(s == null){
-			throw  new RuntimeException("穿参date为空");
+			throw  new RuntimeException("传参date为空");
         }
         try {
             return df.parse(s);
         } catch (Exception e) {
-            throw  new RuntimeException("穿参date为空");
+            throw  new RuntimeException("传参date为空");
         }
     }
 }
@@ -202,7 +202,7 @@ public void testVoid(HttpServletRequest request, HttpServletResponse response) t
 
 前端数组转json：JSON.stringfy(数组)
 
-json转数组：
+json转数组： eval(json) 
 
 ~~~html
 <script src="js/jquery-3.5.1.min.js"></script>
@@ -250,6 +250,29 @@ public class AjaxController {
 }
 ~~~
 
+~~~xml
+<!--json所需jar包-->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.10.2</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.10.2</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-annotations</artifactId>
+    <version>2.10.2</version>
+</dependency>
+~~~
+
+
+
+
+
 # 6、文件上传
 
 ## 1、上传前提
@@ -263,13 +286,6 @@ method取值必须是post；提供一个文件选择域。
 依赖、配置文件上传解析器
 
 表单file的name属性的值必须和controller方法中MultipartFile的形参一致！
-
-~~~xml
-<!--配置文件解析器 id名必须位multipartResolver-->
-<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    <property name="maxUploadSize" value="10285760"></property>
-</bean>
-~~~
 
 ~~~xml
 <!--文件上传-->
@@ -368,7 +384,7 @@ public String uploadFile2(HttpServletRequest requset, MultipartFile upload) thro
 
 springMVC跨服务器上传 报错：returned a response status of 405 Method Not Allowed。
 
- 在你的Tomact服务器安装目录下的conf/web.xml配置文件中加上： 
+ 在Tomact服务器安装目录下的conf/web.xml配置文件中加上： 
 
 ~~~xml
 <init-param>
@@ -475,7 +491,7 @@ springmvc请求时有一个拦截器链。
 
 过滤器是Servlet规范中的一部分；配置/*时会拦截所有的资源。
 
-拦截器是springmvc框架自己的，只能在springmvc工程中使用；他指挥拦截访问的控制器方法，不会对静态资源拦截。使用自定义拦截器必须实现HandlerInterceptor接口。
+拦截器是springmvc框架自己的，只能在springmvc工程中使用；他只会拦截访问的控制器方法，不会对静态资源拦截。使用自定义拦截器必须实现HandlerInterceptor接口。
 
 1、编写拦截器
 
