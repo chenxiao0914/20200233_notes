@@ -392,7 +392,7 @@ mysql> select concat(name,money) from account;
 
 ### 条件查询
 
-语法：select 列表 from 表名 where 筛选条件
+语法：select 列名 from 表名 where 筛选条件
 
 按条件表达式筛选、按逻辑表达式筛选、模糊查询
 
@@ -413,6 +413,34 @@ select * from account where money is null;
 #如果money为null，转换成0表示
 select ifnull(money,0) as money from account;
 ~~~
+
+模糊查询正则模式：regexp
+
+```sql
+#“.”匹配任何单个的字符。（单字节字符）
+#一个字符类“［...］”匹配在方括号内的任何字符。例如，“［abc］”匹配“a”、“b”或“c”。为了命名字符的一个范#围，使用一个“-”。“［a-z］”匹配任何小写字母，而“［0-9］”匹配任何数字。
+#“ * ”匹配零个或多个在它前面的东西。例如，“x*”匹配任何数量的“x”字符，“［0-9］*”匹配的任何数量的数字
+
+#“^”匹配开始，“$”匹配结束
+#“{n}”“重复n次”
+#[^……]，匹配不包含在[]的字符
+#a|b|c，匹配a或b或c
+#?，重复0次或1次	
+#+，重复1次或多次
+
+select * from user where name regexp '晓$';
+select * from user where name regexp '晓?';
+select * from user where name regexp '晓+';
+select * from user where name regexp '晓';
+select * from user where name REGEXP '^.*[方晓]$'
+select * from user where name REGEXP '.*方|晓.';
+select * from user where name REGEXP '[晓方x]$';
+select * from user where name REGEXP '方方$';
+select * from user where name REGEXP 'x{2}';# x不能使用中文字符！！！
+
+```
+
+
 
 ### 排序查询
 

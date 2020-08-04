@@ -189,3 +189,8 @@ s.split('str');//将一个字符串分割为子字符串，然后将结果作为
 s.replace('a','b')//将a替换成b，指挥替换第一次出现的那个。
 ~~~
 
+## 2、JSON
+
+JSON.parse() ： 用于将一个 JSON 字符串转换为 JavaScript 对象。
+
+JSON.stringfy()： 用于将 JavaScript 值转换为 JSON 字符串。

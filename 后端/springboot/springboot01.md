@@ -502,3 +502,47 @@ logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} 
 
 # 五、springboot与springmvc
 
+# 六、整合mybatis出现的问题
+
+1、Invalid bound statement (not found)
+
+读不到userMapper.xml文件，后面查询在编译好的文件中，UserMapper.xml文件并没有引入进来。
+
+如果你建立的是maven工程，pom中需添加如下配置。
+
+~~~xml
+<build>
+    <resources>
+        <resource>
+            <directory>src/main/java</directory>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+        </resource>
+    </resources>
+</build>
+~~~
+
+2、java.sql.SQLException: The server time zone value '�й���׼ʱ��' is unrecognized
+
+- 因为mysql-connection-java版本导致时区的问题。 加上版本号5.1.47，如果加上版本号6.0.6也不行，可能是因为版本太高  。
+
+~~~xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.47</version>
+    <scope>runtime</scope>
+</dependency>
+~~~
+
+-  不加版本号或者版本号为6以上，解决方式：在连接数据库的配置文件中加上以下，时区亚洲/上海 
+
+~~~xml
+url: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+~~~
+
+
+
+
+

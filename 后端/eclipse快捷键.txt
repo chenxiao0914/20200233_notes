@@ -1,0 +1,23 @@
+ctrl+H			搜索
+chrl+shift+T	查找类
+ctrl+k			查找下一个相同的单词
+ctrl+shift+k	查找上一个相同的单词（与搜狗输入法冲突）
+alt+/			提示
+
+
+
+创建java类的时候自动设置作者信息和创建时间
+	window—>preferences—>Java—>Code Stype—>Code Templates
+	Code—>New Java files  
+	点击Edit
+	 
+	${filecomment}
+	${package_declaration}
+	/**
+	* @author GK
+	* @version 创建时间：${date} ${time}
+	* @ClassName 类名称
+	* @Description 类描述
+	*/
+	${typecomment}
+	${type_declaration}
