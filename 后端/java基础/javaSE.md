@@ -41,7 +41,7 @@ jvm：java virtual machine	java虚拟机机制屏蔽了底层运行平台的差�
 
 **变量**
 
-局部变量：方法或语句块内风变量。
+局部变量：方法或语句块内的变量。
 
 成员变量：方法外部，类内部的变量，从属于对象，也称实例变量，会自动初始化为默认值。
 
@@ -233,7 +233,7 @@ abstract：不能创建abstract类的实例。一旦被继承，子类需要实�
 
 ## 5、内部类
 
-讲一个类定义在另一类里面或者方法里面，这样的类称为内部类。分为成员内部类、局部内部类、匿名内部类、静态内部类。
+将一个类定义在另一类里面或者方法里面，这样的类称为内部类。分为成员内部类、局部内部类、匿名内部类、静态内部类。
 
 ### 成员内部类
 
@@ -365,6 +365,26 @@ class Outter {
 exception：分为checked异常和unchecked异常（RuntimeException运行时异常：不需要try...catch...或者throws处理的异常）。一般是因为程序员没有进行必须的检查引起，如NullPointException、ArithmaticException、ArrayIndexoutofBoundsException。
 
 error：系统错误或者底层资源的错误，一般为底层的不可恢复的类。
+
+## 7、注解
+
+元注解
+1.@Target,		所修饰的对象范围，
+		1.CONSTRUCTOR:用于描述构造器
+		2.FIELD:用于描述域即类成员变量
+		3.LOCAL_VARIABLE:用于描述局部变量
+		4.METHOD:用于描述方法
+		5.PACKAGE:用于描述包
+		6.PARAMETER:用于描述参数
+		7.TYPE:用于描述类、接口(包括注解类型) 或enum声明
+2.@Retention,	该Annotation被保留的时间长短
+		1.SOURCE:在源文件中有效（即源文件保留）
+		2.CLASS:在class文件中有效（即class保留）
+		3.RUNTIME:在运行时有效（即运行时保留）
+3.@Documented,	描述其它类型的annotation应该被作为被标注的程序成员的公共API，因此可以被例如javadoc此类的工具文档化。Documented是一个标记注解，没有成员
+4.@Inherited	@Inherited 元注解是一个标记注解，@Inherited阐述了某个被标注的类型是被继承的。如果一个使用了@Inherited修饰的annotation类型被用于一个class，则这个annotation将被用于该class的子类。
+
+注意：@Inherited annotation类型是被标注过的class的子类所继承。类并不从它所实现的接口继承annotation，方法并不从它所重载的方法继承annotation。当@Inherited annotation类型标注的annotation的Retention是RetentionPolicy.RUNTIME，则反射API增强了这种继承性。如果我们使用java.lang.reflect去查询一个@Inherited annotation类型的annotation时，反射代码检查将展开工作：检查class和其父类，直到发现指定的annotation类型被发现，或者到达类继承结构的顶层.Override、Deprecated（使用了过期方法）、SuppressWarnings（告诉Java编译器关闭对类、方法及成员变量的警告）
 
 # 四、数组
 

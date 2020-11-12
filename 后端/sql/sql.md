@@ -94,7 +94,7 @@ SELECT * FROM pet WHERE (species = 'cat' AND sex = 'm') OR (species = 'dog' AND 
 
 ~~~
 
-AND和OR可以混用，但AND比OR具有更高的优先级。如果使用两个操作符，使用圆括号指明如何对条件进行分组是一个好主意。
+AND和OR可以混用，但AND比OR具有更高的优先级。如果使用两个操作符，建议使用圆括号指明如何对条件进行分组。
 
 ### 3、查询特殊列
 

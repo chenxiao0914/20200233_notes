@@ -28,7 +28,7 @@ path： %MAVEN_HOME%\bin
    | Default: ${user.home}/.m2/repository
   <localRepository>/path/to/local/repo</localRepository>
   -->
-<localRepository>D:\tools\apache-maven-repo</localRepository>
+<localRepository>D:\\tools\\apache-maven-repo</localRepository>
 ~~~
 
 #  二、maven项目说明
@@ -105,7 +105,7 @@ Hello
 
 ## 4、依赖
 
-1、maven解析依赖信息时回到本地仓库中查找被以来的jar包.对于我们自己开发的maven工程，使用mvn install命令安装后就可以进入仓库。
+1、maven解析依赖信息时会到本地仓库中查找被依赖的jar包.对于我们自己开发的maven工程，使用mvn install命令安装后就可以进入仓库。
 2、依赖的范围----scope
 	Compile
 			对主程序是否有效：有效
@@ -208,5 +208,20 @@ Hello
   </build>
 ~~~
 
+或者
 
+```xml
+<profile>
+    <id>jdk1.8</id>
+    <activation>
+        <activeByDefault>true</activeByDefault>
+        <jdk>1.8</jdk>
+    </activation>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+    </properties>
+</profile>
+```
 
