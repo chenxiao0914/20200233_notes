@@ -7,6 +7,7 @@ Ctrl＋Alt＋T：可以将代码包在一块内，例如try/catch
 Ctrl＋Alt＋V ：自动创建变量也就是=号前的变量定义
 Ctrl+H：显示类结构图
 Alt+回车：导入包自动修正
+alt+7：显示类结构
 Ctrl＋F7：可以查询当前元素在当前文件中的引用，然后按F3可以选择
 ALT+INSERT：生成get/set 实现接口等
 Ctrl+X： 删除行
